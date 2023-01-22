@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import javax.xml.transform.Result;
 
 class ProductManagerTest {
     Product book1 = new Book(3, "Crime and punishment", 300, "F.M.Dostoevsky");
@@ -21,7 +21,20 @@ class ProductManagerTest {
         Product[] actual = manager.getProducts();
         Product[] expected = {book1, book2, smartphone1, smartphone2};
         Assertions.assertArrayEquals(expected, actual);
-
     }
 
+    @Test
+    public void testShouldFindMatches() {
+        Repository repository = new Repository();
+        ProductManager manager = new ProductManager(repository);
+        manager.add(book1);
+        manager.add(book2);
+        manager.add(smartphone1);
+        manager.add(smartphone2);
+        //manager.getProducts();
+
+        boolean actual = manager.matches(book2, "War");
+        boolean expected = true;
+        Assertions.assertEquals(expected, actual);
+    }
 }
