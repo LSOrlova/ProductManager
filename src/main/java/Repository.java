@@ -1,7 +1,7 @@
 public class Repository {
-    protected Product[] products = new Product[];
+    protected Product[] products = new Product[0];
 
-    public void saveProduct(Product product) {
+    public Product[] saveProduct(Product product) {
         Product[] tmp = new Product[products.length + 1];
         for (int i = 0; i < products.length; i++) {
             tmp[i] = products[i];
@@ -9,13 +9,14 @@ public class Repository {
         tmp[tmp.length - 1] = product;
         products = tmp;
 
+        return tmp;
     }
 
     public Product[] findAll() {
         return products;
     }
 
-    public Product removeById(int id) {
+    public void removeById(int id) {
         Product[] tmp = new Product[products.length - 1];
         int copyToIndex = 0;
         for (Product product : products) {
