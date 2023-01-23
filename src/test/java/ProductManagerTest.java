@@ -6,6 +6,7 @@ import javax.xml.transform.Result;
 class ProductManagerTest {
     Product book1 = new Book(3, "Crime and punishment", 300, "F.M.Dostoevsky");
     Product book2 = new Book(18, "War and peace", 500, "L.N.Tolstoy");
+    Product book3 = new Book(25, "War of the Worlds", 500, "Herbert George Wells");
     Product smartphone1 = new Smartphone(67, "Samsung", 15_000, "China");
     Product smartphone2 = new Smartphone(90, "iPhone", 30_000, "USA");
 
@@ -32,8 +33,23 @@ class ProductManagerTest {
         manager.add(smartphone2);
 
 
-        Product[] expected = {smartphone1} ;
-        Product[] actual = manager.searchBy("China");
+        Product[] expected = {book2};
+        Product[] actual = manager.searchBy("peace");
+        Assertions.assertArrayEquals(expected,actual);
+    }
+
+    @Test
+    public void testShouldSearchByTextMoreMatches() {
+        Repository repository = new Repository();
+        ProductManager manager = new ProductManager(repository);
+        manager.add(book1);
+        manager.add(book2);
+        manager.add(book3);
+        manager.add(smartphone1);
+        manager.add(smartphone2);
+
+        Product[] expected = {book2, book3};
+        Product[] actual = manager.searchBy("War");
         Assertions.assertArrayEquals(expected,actual);
     }
     @Test
