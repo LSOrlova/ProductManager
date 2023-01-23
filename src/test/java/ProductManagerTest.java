@@ -22,7 +22,20 @@ class ProductManagerTest {
         Product[] expected = {book1, book2, smartphone1, smartphone2};
         Assertions.assertArrayEquals(expected, actual);
     }
+    @Test
+    public void testShouldSearchByText() {
+        Repository repository = new Repository();
+        ProductManager manager = new ProductManager(repository);
+        manager.add(book1);
+        manager.add(book2);
+        manager.add(smartphone1);
+        manager.add(smartphone2);
 
+
+        Product[] expected = {smartphone1} ;
+        Product[] actual = manager.searchBy("China");
+        Assertions.assertArrayEquals(expected,actual);
+    }
     @Test
     public void testShouldFindMatches() {
         Repository repository = new Repository();
