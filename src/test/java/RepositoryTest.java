@@ -13,13 +13,16 @@ class RepositoryTest {
     public void testSaveProduct() {
         Repository repository = new Repository();
         repository.saveProduct(book1);
+        repository.saveProduct(book2);
+        repository.saveProduct(smartphone1);
         repository.saveProduct(smartphone2);
         repository.findAll();
 
-        Product[] expected = {book1, smartphone2};
+        Product[] expected = {book1, book2, smartphone1, smartphone2};
         Product[] actual = repository.findAll();
         Assertions.assertArrayEquals(expected, actual);
     }
+
     @Test
     public void testRemoveById() {
         Repository repository = new Repository();
@@ -32,5 +35,34 @@ class RepositoryTest {
         Product[] actual = repository.findAll();
         Assertions.assertArrayEquals(expected, actual);
 
+    }
+
+
+    @Test
+    public void testNotFoundException() {
+        Repository repository = new Repository();
+        repository.saveProduct(book1);
+        repository.saveProduct(book2);
+        repository.saveProduct(smartphone1);
+
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            repository.removeById(40);
+        });
+
+    }
+
+    @Test
+    public void testSaveProductAlreadyExists() {
+        Repository repository = new Repository();
+        repository.saveProductAlreadyExist(book1);
+        repository.saveProductAlreadyExist(book2);
+        repository.saveProductAlreadyExist(smartphone1);
+        repository.saveProductAlreadyExist(smartphone2);
+        repository.findAll();
+
+        Assertions.assertThrows(AlreadyExistsException.class, () -> {
+            repository.saveProductAlreadyExist(smartphone2);
+        });
     }
 }
