@@ -22,12 +22,10 @@ public class Repository {
 
     public Product[] saveProductAlreadyExist(Product product) {
         Product[] tmp = new Product[products.length + 1];
-
-
+        if (findById(product.getId()) != null) {
+            throw new AlreadyExistsException("ID already exists ");
+        }
         for (int i = 0; i < products.length; i++) {
-            if (findById(product.getId()) == product) {
-                throw new AlreadyExistsException("ID already exists ");
-            }
             tmp[i] = products[i];
         }
         tmp[tmp.length - 1] = product;
